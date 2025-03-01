@@ -12,18 +12,40 @@ def leitura_Imagem(nome):
     return imagem
 
 # Realiza a plotagem das imagens com o matplotlib
-def plotagem_imagem(Imagem_Original, Imagem_Binaria):
+def plotagem_imagem(Imagem_Original, Imagem_Filtrada_Gauss, Imagem_Filtrada_Normalizada, Imagem_Threshold_High, Imagem_Threshold_Low, Imagem_Final):
     
-    # Cria uma figura com dois subplots lado a lado
-    fig, [ax1, ax2] = plt.subplots(1, 2, figsize=(10, 5))
+    # Cria uma figura com todos os subplots
+    fig, axs = plt.subplots(3, 3, figsize=(15,10))
     
-    # Exibe a imagem original no primeiro subplot
-    ax1.imshow(Imagem_Original, cmap='gray')
+    # Plota a imagem original
+    axs[0,0].imshow(Imagem_Original, cmap='gray')
+    axs[0,0].set_title('Imagem Original')
     
-    # Exibe a imagem binária no segundo subplot
-    ax2.imshow(Imagem_Binaria, cmap='Greys')
+    # Plota a imagem filtrada com o filtro de Gauss
+    axs[0,1].imshow(Imagem_Filtrada_Gauss, cmap='gray')
+    axs[0,1].set_title('Imagem Filtrada com Filtro de Gauss')
     
-    # Mostra a figura com os subplots
+    # Plota a imagem filtrada normalizada
+    axs[0,2].imshow(Imagem_Filtrada_Normalizada, cmap='gray')
+    axs[0,2].set_title('Imagem Filtrada Normalizada')
+    
+    # Plota a imagem com o threshold alto
+    axs[1,0].imshow(Imagem_Threshold_High, cmap='gray')
+    axs[1,0].set_title('Imagem com Threshold Alto')
+    
+    # Plota a imagem com o threshold baixo
+    axs[1,1].imshow(Imagem_Threshold_Low, cmap='gray')
+    axs[1,1].set_title('Imagem com Threshold Baixo')
+    
+    # Plota a imagem final
+    axs[1,2].imshow(Imagem_Final, cmap='gray')
+    axs[1,2].set_title('Imagem Final')
+    
+    # Remove os eixos das imagens
+    for ax in axs.flat:
+        ax.axis('off')
+    
+    # Exibe a figura
     plt.show()
     
 def salvar_imagem(Imagem_Binaria, nome):
