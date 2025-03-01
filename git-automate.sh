@@ -1,10 +1,17 @@
 #!/bin/bash
 
+# Verifica se uma mensagem de commit foi fornecida
+if [ -z "$1" ]; then
+    echo "Erro: Você precisa fornecer uma mensagem para o commit."
+    echo "Uso: ./git-automate.sh 'Sua mensagem de commit aqui'"
+    exit 1
+fi
+
+# Mensagem do commit (passada como argumento)
+COMMIT_MESSAGE="$1"
+
 # Nome da branch atual
 CURRENT_BRANCH=$(git branch --show-current)
-
-# Mensagem do commit (você pode personalizar ou passar como argumento)
-COMMIT_MESSAGE="Automatic commit and merge"
 
 # Verifica se há alterações para commitar
 if [[ -n $(git status -s) ]]; then
