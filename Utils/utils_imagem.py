@@ -8,14 +8,14 @@ import cv2
 
 # Leitura da imagem
 def leitura_Imagem(nome):
-    
     imagem = cv2.imread(nome)
     return imagem
+
 # Realiza a plotagem das imagens com o matplotlib
 def plotagem_imagem(Imagem_Original, Imagem_Filtrada_Gauss, Imagem_magnitude_gradiente, Imagem_direcao_gradiente, Imagem_Threshold_High):
     
     # Cria uma figura com todos os subplots
-    fig, axs = plt.subplots(1, 5, figsize=(20, 20))
+    fig, axs = plt.subplots(1, 5, figsize=(20, 10))
     
     # Adiciona as imagens aos subplots
     axs[0].imshow(Imagem_Original, cmap='gray')
@@ -39,18 +39,17 @@ def plotagem_imagem(Imagem_Original, Imagem_Filtrada_Gauss, Imagem_magnitude_gra
     
     # Exibe a figura
     plt.show()
-    
+  
+# Salva a imagem na pasta de resultados  
 def salvar_imagem(Imagem_Binaria, nome):
     
     plt.imsave(nome, Imagem_Binaria, cmap='Greys')
     
+# Lista as imagens disponíveis na pasta
 def lista_imagens_pasta(pasta, console):
     
     # Lista as imagens disponíveis na pasta
     imagens = [f for f in os.listdir(pasta)]
-    
-    # Exibe as imagens disponíveis na pasta
-    console.print('Imagens disponíveis na pasta:', imagens)
     
     # Printa as imagens
     for i, imagem in enumerate(imagens):
@@ -58,14 +57,14 @@ def lista_imagens_pasta(pasta, console):
         
     return imagens
 
+# Escolhe uma imagem para aplicar o método de Canny
 def escolher_imagens(imagens, console):
     
     # Escolhe uma imagem para aplicar o método de Otsu
     while True:
-        escolha = int(Prompt.ask('Escolha uma imagem para aplicar o método de Otsu:', console=console))
+        escolha = int(Prompt.ask('Escolha uma imagem para aplicar o método de Canny:', console=console))
         
         if escolha > 0 and escolha <= len(imagens):
             return imagens[escolha-1]
         else:
             console.print('Escolha inválida. Tente novamente.')
-    
