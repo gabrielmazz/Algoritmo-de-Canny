@@ -5,6 +5,7 @@ from rich.prompt import Prompt
 import utils
 import filters
 import Bordas.bordas as bordas
+import cv2
 
 import Utils.utils_imagem as ut_img
 
@@ -15,20 +16,21 @@ parser = argparse.ArgumentParser()
 SAVE = parser.add_argument('--save', action='store_true', help='Salvar a imagem na pasta de resultados')
 
 
-def metodo_canny(imagem_escolhida, tipo, filtro, m_threshold1, n_threshold2):
+def metodo_canny(imagem_escolhida, tipo, filtro, low_threshold_ratio, high_threshold_ratio):
     
     # Leitura da imagem
-    Imagem_Original = ut_img.leitura_Imagem('./imagens/{}'.format(imagem_escolhida))    
+    Imagem_Original = cv2.imread('./imagens/{}'.format(imagem_escolhida), cv2.IMREAD_GRAYSCALE)
+
 
     # Aplica a detecção de bordas de Canny
-    Imagem_Filtrada_Gauss, Imagem_Filtrada_Normalizada, Imagem_Threshold_High, Imagem_Threshold_Low, Imagem_Final = bordas.Canny(Imagem_Original, m_threshold1, n_threshold2)
+    Imagem_Filtrada_Gauss, Imagem_magnitude_gradiente, Imagem_direcao_gradiente, Imagem_Threshold_High = bordas.Canny(Imagem_Original, 5, 1, low_threshold_ratio, high_threshold_ratio)
 
     # Realiza a plotagem das imagens
-    ut_img.plotagem_imagem(Imagem_Original, Imagem_Filtrada_Gauss, Imagem_Filtrada_Normalizada, Imagem_Threshold_High, Imagem_Threshold_Low, Imagem_Final)
+    ut_img.plotagem_imagem(Imagem_Original, Imagem_Filtrada_Gauss, Imagem_magnitude_gradiente, Imagem_direcao_gradiente, Imagem_Threshold_High)
     
     # Salva a imagem na pasta de resultados
-    if SAVE:
-        ut_img.salvar_imagem(Imagem_Binaria, './resultados/{}_{}_{}_{}x{}.png'.format(tipo,imagem,filtro,m,n))
+    #if SAVE:
+    #    ut_img.salvar_imagem(Imagem_Binaria, './resultados/{}_{}_{}_{}x{}.png'.format(tipo,imagem,filtro,m,n))
 
 if __name__ == '__main__':
     
@@ -45,4 +47,4 @@ if __name__ == '__main__':
     m_threshold1 = float(Prompt.ask('Digite o [bold purple]valor[/bold purple] da [bold purple]limiar inferior[/bold purple] [cyan](m)[/cyan] [green](default 0.3)[/green]', default=0.3))
     n_threshold2 = float(Prompt.ask('Digite o [bold purple]valor[/bold purple] da [bold purple]limiar superior[/bold purple] [cyan](n)[/cyan] [green](default 0.7)[/green]', default=0.7))
     
-    metodo_canny(imagem_escolhida ,'canny', 'Gaussian', m_threshold1, n_threshold2)
+    metodo_canny(imagem_escolhida ,'canny', 'Gaussian', low_threshold_ratio, high_threshold_ratio)

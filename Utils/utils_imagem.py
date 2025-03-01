@@ -4,43 +4,35 @@ import numpy as np
 from rich.console import Console
 from rich.prompt import Prompt
 import os
+import cv2
 
 # Leitura da imagem
 def leitura_Imagem(nome):
-    print(nome)
-    imagem = mpimg.imread(nome)
+    
+    imagem = cv2.imread(nome)
     return imagem
-
 # Realiza a plotagem das imagens com o matplotlib
-def plotagem_imagem(Imagem_Original, Imagem_Filtrada_Gauss, Imagem_Filtrada_Normalizada, Imagem_Threshold_High, Imagem_Threshold_Low, Imagem_Final):
+def plotagem_imagem(Imagem_Original, Imagem_Filtrada_Gauss, Imagem_magnitude_gradiente, Imagem_direcao_gradiente, Imagem_Threshold_High):
     
     # Cria uma figura com todos os subplots
-    fig, axs = plt.subplots(3, 3, figsize=(15,10))
+    fig, axs = plt.subplots(1, 5, figsize=(20, 20))
     
-    # Plota a imagem original
-    axs[0,0].imshow(Imagem_Original, cmap='gray')
-    axs[0,0].set_title('Imagem Original')
+    # Adiciona as imagens aos subplots
+    axs[0].imshow(Imagem_Original, cmap='gray')
+    axs[0].set_title('Imagem Original')
     
-    # Plota a imagem filtrada com o filtro de Gauss
-    axs[0,1].imshow(Imagem_Filtrada_Gauss, cmap='gray')
-    axs[0,1].set_title('Imagem Filtrada com Filtro de Gauss')
+    axs[1].imshow(Imagem_Filtrada_Gauss, cmap='gray')
+    axs[1].set_title('Imagem Filtrada com Filtro Gaussiano')
     
-    # Plota a imagem filtrada normalizada
-    axs[0,2].imshow(Imagem_Filtrada_Normalizada, cmap='gray')
-    axs[0,2].set_title('Imagem Filtrada Normalizada')
+    axs[2].imshow(Imagem_magnitude_gradiente, cmap='gray')
+    axs[2].set_title('Magnitude do Gradiente')
     
-    # Plota a imagem com o threshold alto
-    axs[1,0].imshow(Imagem_Threshold_High, cmap='gray')
-    axs[1,0].set_title('Imagem com Threshold Alto')
+    axs[3].imshow(Imagem_direcao_gradiente, cmap='gray')
+    axs[3].set_title('Direção do Gradiente')
     
-    # Plota a imagem com o threshold baixo
-    axs[1,1].imshow(Imagem_Threshold_Low, cmap='gray')
-    axs[1,1].set_title('Imagem com Threshold Baixo')
-    
-    # Plota a imagem final
-    axs[1,2].imshow(Imagem_Final, cmap='gray')
-    axs[1,2].set_title('Imagem Final')
-    
+    axs[4].imshow(Imagem_Threshold_High, cmap='gray')
+    axs[4].set_title('Imagem com Limiar Alto')
+     
     # Remove os eixos das imagens
     for ax in axs.flat:
         ax.axis('off')
