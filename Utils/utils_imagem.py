@@ -73,7 +73,7 @@ def escolher_imagens(imagens, console):
     
     # Escolhe uma imagem para aplicar o método de Otsu
     while True:
-        escolha = int(Prompt.ask('Escolha uma imagem para aplicar o método de [bold purple]Otsu[/bold purple]', console=console))
+        escolha = int(Prompt.ask('Escolha uma imagem para aplicar o método de [bold purple]Canny[/bold purple]', console=console))
         
         if escolha > 0 and escolha <= len(imagens):
             return imagens[escolha-1]
