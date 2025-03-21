@@ -29,13 +29,13 @@ def metodo_canny(imagem_escolhida, tipo, filtro, low_threshold_ratio, high_thres
         task = progress.add_task("[cyan]Processando...", total=3)
         
         # Leitura da imagem
-        progress.update(task, advance=1, description='[green]Lendo a imagem...')
+        progress.update(task, advance=1, description='[cyan]Lendo a imagem...')
         Imagem_Original = cv2.imread('./imagens/{}'.format(imagem_escolhida), cv2.IMREAD_GRAYSCALE)
 
         time.sleep(1)
 
         # Aplica a detecção de bordas de Canny
-        progress.update(task, advance=1, description='[green]Aplicando o método de Canny...')
+        progress.update(task, advance=1, description='[cyan]Aplicando o método de Canny...')
         Imagem_Filtrada_Gauss, Imagem_magnitude_gradiente, Imagem_direcao_gradiente, Imagem_Threshold_High = bordas.Canny(Imagem_Original, 5, sigma, low_threshold_ratio, high_threshold_ratio)
 
         time.sleep(1)
@@ -44,7 +44,7 @@ def metodo_canny(imagem_escolhida, tipo, filtro, low_threshold_ratio, high_thres
         tempo_execucao = time.time() - tempo_inicio - 2
 
         # Realiza a plotagem das imagens
-        progress.update(task, advance=1, description='[green]Plotando as imagens...')
+        progress.update(task, advance=1, description='[cyan]Plotando as imagens...')
         ut_img.plotagem_imagem(Imagem_Original, Imagem_Filtrada_Gauss, Imagem_magnitude_gradiente, Imagem_direcao_gradiente, Imagem_Threshold_High)
         
     time.sleep(1)
